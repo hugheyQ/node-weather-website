@@ -9,7 +9,14 @@ const forecast = (latitude, longitude, callback) => {
 		} else if (body.error) {
 			callback('Unable to find location', undefined);
 		} else {
-			callback(undefined, `${body.current.weather_descriptions[0]}. It is currently ${body.current.temperature} degrees out. It feels like ${body.current.feelslike} degrees out.`);
+			let timeOfDay = '';
+			if (body.current.is_day === 'yes') {
+				timeOfDay = 'day time';
+			} else {
+				timeOfDay = 'night time';
+			}
+
+			callback(undefined, `${body.current.weather_descriptions[0]}. It is currently ${timeOfDay}. It is ${body.current.temperature} degrees out but feels like ${body.current.feelslike} degrees out.`);
 		}
 	});
 };
